@@ -8,27 +8,15 @@ import {
   UserButton,
   useUser,
 } from "@clerk/nextjs";
+import CreatePostWizard from "~/components/CreatePostWizard";
+import PostView from "~/components/PostView";
 
 const Home: NextPage = () => {
   const { data, isError, isLoading } = api.post.getAll.useQuery();
   // const hello = api.post.hello.useQuery({text: "Mounir"});
   // console.log(hello.data?.greeting);
-
+  console.table(data);
   const user = useUser();
-
-  if (isError)
-    return (
-      <div className="grid h-48 place-content-center">
-        <p>Dzair is down boi 😐 ❌</p>
-      </div>
-    );
-
-  if (isLoading)
-    return (
-      <div className="grid h-48 place-content-center">
-        <p>Loading...</p>
-      </div>
-    );
 
   return (
     <>
@@ -40,19 +28,10 @@ const Home: NextPage = () => {
       <main className="flex h-screen justify-center">
         <div className="h-full w-full border-x border-gray-500 md:max-w-4xl">
           <div className="flex border-b border-gray-500 p-4">
+            {!user.isLoaded && <div className="flex gap-2">COMINN....</div>}
             {user.isSignedIn ? (
-              <div className="flex flex-1 items-center justify-between">
-                <div className="flex gap-2">
-                  <UserButton />
-                  <p className="text-2xl font-bold text-white">
-                    {user.user.fullName}
-                  </p>
-                </div>
-                <SignOutButton>
-                  <button className="rounded-full border border-gray-400 px-4 py-2 font-bold text-white transition hover:bg-blue-300 hover:text-black">
-                    <p>Log Out</p>
-                  </button>
-                </SignOutButton>
+              <div className="flex flex-grow items-center justify-between gap-2">
+                <CreatePostWizard />
               </div>
             ) : (
               <div>
@@ -61,10 +40,18 @@ const Home: NextPage = () => {
             )}
           </div>
           <div>
-            {data?.map((post) => (
-              <div key={post.id} className="border-b border-gray-400 p-8">
-                <p className="text-4xl font-bold text-white">{post.content}</p>
+            {isLoading && (
+              <div className="grid h-48 place-content-center">
+                <p>Loading...</p>
               </div>
+            )}
+            {isError && (
+              <div className="grid h-48 place-content-center">
+                <p>DB is down boi 😐 ❌</p>
+              </div>
+            )}
+            {data?.map(({ post, author }) => (
+              <PostView key={post.id} post={post} author={author} />
             ))}
           </div>
         </div>
