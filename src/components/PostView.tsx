@@ -1,5 +1,6 @@
 import React from "react";
 import { RouterOutputs } from "~/utils/api";
+import Image from "next/image";
 import relativeTime from "dayjs/plugin/relativeTime";
 import dayjs from "dayjs";
 dayjs.extend(relativeTime);
@@ -11,10 +12,11 @@ export default function PostView(props: PostWithAuthor) {
   return (
     <div key={post.id} className="border-b border-gray-400 p-8">
       <div className="flex items-center gap-4">
-        <img
-          src={author?.profileImageUrl}
+        <Image
+          src={author?.profileImageUrl!}
+          width={48}
+          height={48}
           alt={author?.username!}
-          className="h-12 w-12 rounded-full"
         />
         <div className="flex flex-col">
           <div className="text-slate-200">
