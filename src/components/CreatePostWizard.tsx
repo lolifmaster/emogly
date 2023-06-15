@@ -1,5 +1,6 @@
 import { useUser } from "@clerk/nextjs";
-import { UserButton, SignOutButton } from "@clerk/nextjs";
+import { SignOutButton, UserButton } from "@clerk/nextjs";
+import Image from "next/image";
 
 export default function CreatePostWizard() {
   const user = useUser();
@@ -9,7 +10,13 @@ export default function CreatePostWizard() {
 
   return (
     <div className="flex w-full items-center gap-4">
-      <UserButton />
+      <Image
+        src={user.user.profileImageUrl}
+        width={32}
+        height={32}
+        alt={user.user.fullName!}
+        className="rounded-full"
+      />
       <textarea
         placeholder="What is happening?!"
         className="scroll no-scrollbar flex-grow resize-none flex-wrap bg-transparent px-4 py-2 font-bold outline-none"
