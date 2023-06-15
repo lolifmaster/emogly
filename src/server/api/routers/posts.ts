@@ -55,6 +55,7 @@ export const postRouter = createTRPCRouter({
           title: "New Post",
         },
     })
+    return newPost;
   }),
 });
 
