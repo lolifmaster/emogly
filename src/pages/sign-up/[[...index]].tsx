@@ -1,9 +1,8 @@
 import { SignUp } from "@clerk/nextjs";
 
-
 export default function Page() {
   return (
-    <div className='grid place-items-center min-h-screen'>
+    <div className="grid min-h-screen place-items-center">
       <SignUp />
     </div>
   );
