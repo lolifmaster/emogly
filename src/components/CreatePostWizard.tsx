@@ -6,6 +6,7 @@ import Loading from "./Loading";
 import cn from "~/utils/merge";
 import { SignOutButton } from "@clerk/nextjs";
 import { FaSignOutAlt } from "react-icons/fa";
+import { toast } from "react-hot-toast";
 
 export default function CreatePostWizard() {
   const user = useUser();
@@ -14,8 +15,12 @@ export default function CreatePostWizard() {
   const [data, setData] = useState("");
   const { mutate, isLoading } = api.post.create.useMutation({
     onSuccess: () => {
+      toast.success("Tweeted successfully 🎉");
       void ctx.post.getAll.invalidate();
       setData("");
+    },
+    onError: (err) => {
+      toast.error("Only emojies boi 😐");
     },
   });
   const disabled: boolean = isLoading || data.length === 0;
