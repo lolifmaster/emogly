@@ -6,6 +6,8 @@ import CreatePostWizard from "~/components/CreatePostWizard";
 import PostView from "~/components/PostView";
 import Loading from "~/components/Loading";
 import LoadingPage from "~/components/LoadingPage";
+import { SignOutButton, UserButton } from "@clerk/nextjs";
+import { FaSignOutAlt } from "react-icons/fa";
 
 const Home: NextPage = () => {
   const { data, isError, isLoading } = api.post.getAll.useQuery();
@@ -21,8 +23,15 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex h-screen justify-center">
-        <div className="h-full w-full border-x border-gray-500 md:max-w-4xl">
-          <div className="flex border-b border-gray-500 p-4">
+        {user.isSignedIn && (
+          <SignOutButton>
+            <button className="absolute right-2 top-2 rounded-full border border-blue-500 px-4 py-2 font-bold text-white transition hover:bg-blue-500 hover:text-black">
+              <FaSignOutAlt />
+            </button>
+          </SignOutButton>
+        )}
+        <div className="no-scrollbar h-full w-full overflow-x-hidden border-x border-gray-500 md:max-w-4xl">
+          <div className="sticky top-0 flex border-b border-gray-500 p-4 backdrop-blur-md">
             {user.isSignedIn ? (
               <div className="flex flex-grow items-center justify-between gap-2">
                 <CreatePostWizard />
