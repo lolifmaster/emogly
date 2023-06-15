@@ -10,6 +10,8 @@ import {
 } from "@clerk/nextjs";
 import CreatePostWizard from "~/components/CreatePostWizard";
 import PostView from "~/components/PostView";
+import Loading from "~/components/Loading";
+import LoadingPage from "~/components/LoadingPage";
 
 const Home: NextPage = () => {
   const { data, isError, isLoading } = api.post.getAll.useQuery();
@@ -17,6 +19,8 @@ const Home: NextPage = () => {
   // console.log(hello.data?.greeting);
   console.table(data);
   const user = useUser();
+
+  if (!user.isLoaded) return <LoadingPage />;
 
   return (
     <>
@@ -28,7 +32,6 @@ const Home: NextPage = () => {
       <main className="flex h-screen justify-center">
         <div className="h-full w-full border-x border-gray-500 md:max-w-4xl">
           <div className="flex border-b border-gray-500 p-4">
-            {!user.isLoaded && <div className="flex gap-2">COMINN....</div>}
             {user.isSignedIn ? (
               <div className="flex flex-grow items-center justify-between gap-2">
                 <CreatePostWizard />
@@ -42,7 +45,7 @@ const Home: NextPage = () => {
           <div>
             {isLoading && (
               <div className="grid h-48 place-content-center">
-                <p>Loading...</p>
+                <Loading />
               </div>
             )}
             {isError && (
