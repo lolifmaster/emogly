@@ -1,13 +1,7 @@
 import { type NextPage } from "next";
-import Image from "next/image";
 import Head from "next/head";
 import { api } from "~/utils/api";
-import {
-  SignInButton,
-  SignOutButton,
-  UserButton,
-  useUser,
-} from "@clerk/nextjs";
+import { SignInButton, useUser } from "@clerk/nextjs";
 import CreatePostWizard from "~/components/CreatePostWizard";
 import PostView from "~/components/PostView";
 import Loading from "~/components/Loading";
@@ -15,9 +9,6 @@ import LoadingPage from "~/components/LoadingPage";
 
 const Home: NextPage = () => {
   const { data, isError, isLoading } = api.post.getAll.useQuery();
-  // const hello = api.post.hello.useQuery({text: "Mounir"});
-  // console.log(hello.data?.greeting);
-  console.table(data);
   const user = useUser();
 
   if (!user.isLoaded) return <LoadingPage />;

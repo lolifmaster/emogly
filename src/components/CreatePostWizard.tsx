@@ -1,5 +1,4 @@
 import { useUser } from "@clerk/nextjs";
-import React from "react";
 import { UserButton, SignOutButton } from "@clerk/nextjs";
 
 export default function CreatePostWizard() {
