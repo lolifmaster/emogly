@@ -19,8 +19,13 @@ export default function CreatePostWizard() {
       void ctx.post.getAll.invalidate();
       setData("");
     },
-    onError: () => {
-      toast.error("Only emojies boi 😐");
+    onError: (err) => {
+      const errorMessage = err.data?.zodError?.fieldErrors.content;
+      if (errorMessage && errorMessage[0]) {
+        toast.error(errorMessage[0]);
+      } else {
+        toast.error(err.message);
+      }
     },
   });
   const disabled: boolean = isLoading || data.length === 0;
