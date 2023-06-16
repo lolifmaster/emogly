@@ -15,7 +15,7 @@ export default function PostView(props: PostWithAuthor) {
           src={author.profileImageUrl}
           width={48}
           height={48}
-          alt={author.username}
+          alt="user_name"
           className="rounded-full"
         />
         <div className="flex flex-col">

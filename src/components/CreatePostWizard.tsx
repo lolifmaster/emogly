@@ -19,7 +19,7 @@ export default function CreatePostWizard() {
       void ctx.post.getAll.invalidate();
       setData("");
     },
-    onError: (err) => {
+    onError: () => {
       toast.error("Only emojies boi 😐");
     },
   });
